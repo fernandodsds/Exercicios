@@ -64,6 +64,7 @@ public class Fila <X> implements Cloneable //FIFO
     	for (int i = 0; i < this.ultimo; i++) 
 			this.item[i]= retornaItem((X) this.item[i+1]);
     	this.item[this.ultimo] = null;
+    	this.ultimo--;
         //validar se existe algo guardado em Item
         //remover de Item o primeiro valor guardado
     }
@@ -113,7 +114,7 @@ public class Fila <X> implements Cloneable //FIFO
 		
     	
     	
-		return ultimo;
+		return ret;
 
 
     }
