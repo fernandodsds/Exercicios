@@ -1,15 +1,16 @@
-﻿import java.lang.reflect.InvocationTargetException;
+package fila;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import javax.sql.rowset.spi.TransactionalWriter;
 
-public class Fila <X> implements Cloneable //FIFO
+public class Fila2 <X> implements Cloneable //FIFO
 {
 
     private Object[] item;
     private int ultimo = -1;
 
-    public Fila (int capacidade) throws Exception
+    public Fila2 (int capacidade) throws Exception
     {
         if (capacidade<=0)
             throw new Exception ("Tamanho invalido");
@@ -17,7 +18,7 @@ public class Fila <X> implements Cloneable //FIFO
 
     }
 
-        public Fila  (Fila <X> modelo) throws Exception
+        public Fila2  (Fila2 <X> modelo) throws Exception
         {
           if (modelo==null)
               throw new Exception ("invalido");
@@ -41,7 +42,7 @@ public class Fila <X> implements Cloneable //FIFO
     	if(x == null)
     		throw new Exception("Invalido");
     	if (this.cheia())
-    		throw new Exception("Não cabem mais itens");
+    		throw new Exception("N�o cabem mais itens");
     	ultimo++;
     	this.item[ultimo] = retornaItem(x);
   	}
@@ -49,7 +50,7 @@ public class Fila <X> implements Cloneable //FIFO
     public X getUmItem () throws Exception
     {
     	if(this.vazia())
-    		throw new Exception("A fila esta vazia");
+    		throw new Exception("A Fila2 esta vazia");
     	
 		return (X) this.item[0];
         //validar se existem coisas no vetor (topo = -1?)
@@ -59,7 +60,7 @@ public class Fila <X> implements Cloneable //FIFO
     public void jogueForaUmItem () throws Exception
     {
     	if(this.vazia())
-    		throw new Exception("A fila esta vazia");
+    		throw new Exception("A Fila2 esta vazia");
     	
     	for (int i = 0; i < this.ultimo; i++) 
 			this.item[i]= retornaItem((X) this.item[i+1]);
@@ -131,9 +132,9 @@ public class Fila <X> implements Cloneable //FIFO
     		return false;
     	
     	
-    	Fila<X> param = null;
+    	Fila2<X> param = null;
 		try {
-			param = new Fila<X>((Fila<X>)obj);
+			param = new Fila2<X>((Fila2<X>)obj);
 			if(this.ultimo != param.ultimo)
 				return false;
 		} catch (Exception e) {
@@ -148,9 +149,9 @@ public class Fila <X> implements Cloneable //FIFO
 
     public Object clone ()
     {
-    	Fila<X> ret =null;
+    	Fila2<X> ret =null;
     	try {
-			ret = new Fila<X>(this);
+			ret = new Fila2<X>(this);
 		} catch (Exception e) {
 			
 		}
