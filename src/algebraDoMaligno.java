@@ -5,54 +5,66 @@ import pilha.Pilha;
 
 public class algebraDoMaligno {
 	
-	public static StringTokenizer quebra(String exp)throws Exception {
-		if(exp == null || exp.equals(""))
-			throw new Exception("Insira uma expressão");
-//		if(exp.contains("^[a-zA-Z\\s]+$"))
-//			throw new Exception("Somente");
-		StringTokenizer ret = new StringTokenizer(exp, "+-*/^()",true);
-		
-		return ret;
-	}
-	
-	public static void primeiraParte(StringTokenizer exp) throws Exception
-	{
 
-			Fila<String> fila =  new Fila<String>(exp.countTokens());
-			Pilha<String> pilha =  new Pilha<String>(exp.countTokens());
+	public static void calcula(String str) throws Exception {
+		StringTokenizer exp = new StringTokenizer(str, "+-*/^()", true);
+		Fila<String> fila =new Fila<String>(20);
+		Pilha<String> pilha =new Pilha<String>(20);
 
-		while(exp.hasMoreTokens())
-		{
-			try {
-				Double valor = Double.parseDouble(exp.nextToken());
-				System.out.println(valor);
-				fila.guardeUmItem(exp.nextToken());
-			} catch (Exception e){
-				String verificable =exp.nextToken();
-//				while(true) {
-//					if(verificaTable(verificable.charAt(0), pilha.getUmItem().charAt(0)))
-//					{
-//						fila.guardeUmItem(pilha.getUmItem());
-//						pilha.jogueUmItemFora();
-//						
-//					}
-//					else
-//					{
-//						pilha.guardeUmItem(verificable);
-//						break;
-//					}
-//				}
-				System.out.println(verificable);
-			}
+		while (exp.hasMoreTokens()) {
 			
+	
+			String next =  (String) exp.nextElement();			
+		
+		try {
+				double tente = Double.parseDouble(next);
+				fila.guardeUmItem(next);
+			} catch (Exception e) {
+				if(next.charAt(0) =='(' || pilha.vazia())
+					pilha.guardeUmItem(next);
+				else
+				{
+					for(;;)
+					{
+						boolean tab = verificaTable(pilha.getUmItem().charAt(0), next.charAt(0));
+						if(next.equals(")")) {
+							boolean encontrou = false;
+								while(!encontrou)
+								{
+									if(pilha.getUmItem().equals("(")) 
+									{
+										pilha.jogueUmItemFora();
+										encontrou =true;
+									}
+									fila.guardeUmItem(pilha.getUmItem());
+									pilha.jogueUmItemFora();
+									
+								}
+								break;
+								
+							}
+						
+						
+						if(tab)
+						{
+							fila.guardeUmItem(pilha.getUmItem());
+							pilha.jogueUmItemFora();
+						}
+						else
+						{						
+							pilha.guardeUmItem(next);
+							break;
+						
+						}
+					}
+				}
+			}
 			
 			
 		}
 		System.out.println(fila);
 		System.out.println(pilha);
 	}
-	
-	
 	public static boolean verificaTable(Character a,Character b) {
 		boolean [][] verify ={
 				          {false,false,false,false,false,false,true},
