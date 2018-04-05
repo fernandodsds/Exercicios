@@ -18,6 +18,7 @@ public class testePerf {
 //	}
 		
 		try {
+			//String exp = "(1+1)";
 			String exp = "10+(2*3-4)^2/4+6*2";
 			algebraDoMaligno.calcula(exp);
 		} catch (Exception e) {

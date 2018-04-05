@@ -12,11 +12,12 @@ public class algebraDoMaligno {
 		Pilha<String> pilha =new Pilha<String>(20);
 
 		while (exp.hasMoreTokens()) {
-			
+			boolean ativo =false;
 	
 			String next =  (String) exp.nextElement();			
 		
 		try {
+		ativo = false;
 				double tente = Double.parseDouble(next);
 				fila.guardeUmItem(next);
 			} catch (Exception e) {
@@ -35,15 +36,16 @@ public class algebraDoMaligno {
 									{
 										pilha.jogueUmItemFora();
 										encontrou =true;
+									}else 
+									{
+										fila.guardeUmItem(pilha.getUmItem());
+										pilha.jogueUmItemFora();
 									}
-									fila.guardeUmItem(pilha.getUmItem());
-									pilha.jogueUmItemFora();
 									
 								}
 								break;
 								
 							}
-						
 						
 						if(tab)
 						{
@@ -57,10 +59,17 @@ public class algebraDoMaligno {
 						
 						}
 					}
+					
 				}
+				System.out.println(fila);
+				System.out.println(pilha);
+				
 			}
+				
+		
 			
-			
+		if(pilha.vazia() && ativo == true)
+			break;
 		}
 		System.out.println(fila);
 		System.out.println(pilha);
