@@ -6,28 +6,27 @@ import pilha.Pilha;
 public class algebraDoMaligno {
 	
 
-	public static void calcula(String str) throws Exception {
+	public static void montaPolonesa(String str) throws Exception {
 		StringTokenizer exp = new StringTokenizer(str, "+-*/^()", true);
 		Fila<String> fila =new Fila<String>(20);
 		Pilha<String> pilha =new Pilha<String>(20);
 
 		while (exp.hasMoreTokens()) {
-			boolean ativo =false;
-	
-			String next =  (String) exp.nextElement();			
-		
+			boolean ativo =false;	
+			String next =  (String) exp.nextElement();		
+			System.out.println(next);
 		try {
 		ativo = false;
 				double tente = Double.parseDouble(next);
 				fila.guardeUmItem(next);
-			} catch (Exception e) {
+			} catch (NumberFormatException e) {
 				if(next.charAt(0) =='(' || pilha.vazia())
 					pilha.guardeUmItem(next);
 				else
 				{
 					for(;;)
 					{
-						boolean tab = verificaTable(pilha.getUmItem().charAt(0), next.charAt(0));
+						
 						if(next.equals(")")) {
 							boolean encontrou = false;
 								while(!encontrou)
@@ -36,6 +35,7 @@ public class algebraDoMaligno {
 									{
 										pilha.jogueUmItemFora();
 										encontrou =true;
+										break;
 									}else 
 									{
 										fila.guardeUmItem(pilha.getUmItem());
@@ -47,7 +47,7 @@ public class algebraDoMaligno {
 								
 							}
 						
-						if(tab)
+						if(verificaTable(pilha.getUmItem().charAt(0), next.charAt(0)))
 						{
 							fila.guardeUmItem(pilha.getUmItem());
 							pilha.jogueUmItemFora();
@@ -58,6 +58,12 @@ public class algebraDoMaligno {
 							break;
 						
 						}
+						if(pilha.vazia())
+						{
+							pilha.guardeUmItem(next);
+							break;	
+						}
+							
 					}
 					
 				}
@@ -68,8 +74,12 @@ public class algebraDoMaligno {
 				
 		
 			
-		if(pilha.vazia() && ativo == true)
-			break;
+		}
+		
+		while(!pilha.vazia())
+		{
+			fila.guardeUmItem(pilha.getUmItem());
+			pilha.jogueUmItemFora();
 		}
 		System.out.println(fila);
 		System.out.println(pilha);
@@ -86,7 +96,7 @@ public class algebraDoMaligno {
 				         };
 		
 		
-		return verify[retornaValorChar(a)][retornaValorChar(a)];
+		return verify[retornaValorChar(a)][retornaValorChar(b)];
 	}
 	
 	public static int retornaValorChar(Character c)

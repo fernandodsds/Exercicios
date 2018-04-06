@@ -99,7 +99,7 @@ public class Pilha<X> // LIFO
 			}
 
 		}
-		arr += "]";
+		arr += "] |"+this.topo;
 		return arr;
 	}
 
