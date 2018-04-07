@@ -18,9 +18,9 @@ public class testePerf {
 //	}
 		
 		try {
-			//String exp = "2*(1+1)+4+3";
-			String exp = "10+(2*3-4)^2/4+6*2";
-			algebraDoMaligno.calcula(exp);
+			String exp = "2*(1+1)*(1+5/2)";
+			//String exp = "10+(2*3-4)^2/4+6*2";
+			System.out.println(algebraDoMaligno.resolveExpressao(exp));
 		} catch (Exception e) {
 			System.err.println(e);
 		}
